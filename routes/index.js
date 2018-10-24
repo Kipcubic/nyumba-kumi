@@ -1,13 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Nyumba Kumi iniative' });
-});
-router.get('/products',function(req,res, next){
-	res.send('hello')
+	
+		res.render('index', { title: 'Nyumba Kumi' });
+	});
 
-});
 
 module.exports = router;
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	req.session.oldUrl=req.url;
+   res.redirect('user/signin');
+}
